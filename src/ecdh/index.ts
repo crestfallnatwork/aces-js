@@ -1,0 +1,1 @@
+export {ECDHWalletExtension} from './impl'
