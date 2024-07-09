@@ -1,5 +1,6 @@
-import { generateAddress } from '@ethereumjs/util'
-import {ECDHWalletExtension, ECIES, ECIESEphemeral, generateC25519keys} from './index'
+import test, { describe, it } from 'node:test'
+import {ECDHWalletExtension, ECIES, ECIESEphemeral, generateC25519keys} from '../index'
+import assert from 'node:assert'
 
 async function main() {
     console.log(await userEncryptionEphemeralTest())
@@ -13,7 +14,6 @@ async function userEncryptionEphemeralTest() {
     const eciesEph = new ECIESEphemeral(wallet)
     const ciphertext = await eciesEph.encrypt(Buffer.from(msg))
     const plaintext = Buffer.from(await eciesEph.decrypt(ciphertext)).toString('utf-8')
-    console.log(plaintext)
     return msg === plaintext
 }
 
@@ -27,8 +27,12 @@ async function e2eMessage() {
     const bEcies = new ECIES(bWallet)
     const ciphertext = await aEcies.encrypt(Buffer.from(msg), await bWallet.publicEncryptionKey())
     const plaintext = Buffer.from(await bEcies.decrypt(ciphertext, await aWallet.publicEncryptionKey())).toString('utf-8')
-    console.log(plaintext)
     return msg === plaintext
 }
 
-main()
+test("userEncryption", async () => {
+        assert.equal(true, await userEncryptionEphemeralTest())
+})
+test("e2eMessage", async () => {
+        assert.equal(true, await e2eMessage())
+})

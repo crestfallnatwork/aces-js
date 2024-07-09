@@ -2,15 +2,14 @@
   "name": "aces-js",
   "version": "0.1.0",
   "description": "aptos chain encryption scheme is a way to e2e encrypt messages on aptos",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsx --test"
   },
-  "author": "",
+  "author": "crestfalln",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.14.10",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   },
   "dependencies": {
