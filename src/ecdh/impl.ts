@@ -15,6 +15,10 @@ export class ECDHWalletExtension {
             'aptos:account': {
                 version: '0.1.0',
                 account: this.signer
+            },
+            'aptos:publicEncryptionKey': {
+                version: '0.1.0',
+                publicEncryptionKey: this.publicEncryptionKey
             }
         }
     }

@@ -1,2 +1,2 @@
-export {ECIES} from './impl'
-export {ECDHInterface, generateC25519keys, X25519ECDH} from './echd_provider'
+export {ECIES, ECIESEphemeral} from './impl'
+export {ECDHInterface, generateC25519keys} from './echd_provider'
