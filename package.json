@@ -1,7 +1,7 @@
 {
-  "name": "aces-js",
-  "version": "0.1.0",
-  "description": "aptos chain encryption scheme is a way to e2e encrypt messages on aptos",
+  "name": "acess-js",
+  "version": "0.1.1",
+  "description": "Node.JS implementation of aptos chain encryption scheme which is a way to do e2e encrypt messages on aptos and more",
   "scripts": {
     "test": "tsx --test"
   },

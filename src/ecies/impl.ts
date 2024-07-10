@@ -2,6 +2,15 @@ import { hkdf, encrypt, decrypt, x25519 } from "../utils/index"
 import { ECDHInterface, generateC25519keys } from "./echd_provider"
 import { Ed25519PublicKey } from "@aptos-labs/ts-sdk"
 
+export interface ECIESLike {
+    encrypt(raw: Uint8Array, to: Ed25519PublicKey): Promise<Uint8Array>
+    decrypt(ciphertext: Uint8Array, from: Ed25519PublicKey): Promise<Uint8Array>
+}
+export interface ECIESEphemeralLike {
+    encrypt(raw: Uint8Array): Promise<Uint8Array>
+    decrypt(ciphertext: Uint8Array): Promise<Uint8Array>
+}
+
 export class ECIES {
     private ecdher: ECDHInterface
     constructor(ecdhProvider: ECDHInterface) {
