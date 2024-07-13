@@ -7,8 +7,8 @@ export interface ECIESLike {
     decrypt(ciphertext: Uint8Array, from: Ed25519PublicKey): Promise<Uint8Array>
 }
 export interface ECIESEphemeralLike {
-    encrypt(raw: Uint8Array): Promise<Uint8Array>
-    decrypt(ciphertext: Uint8Array): Promise<Uint8Array>
+    encryptEphemeral(raw: Uint8Array): Promise<Uint8Array>
+    decryptEphemeral(ciphertext: Uint8Array): Promise<Uint8Array>
 }
 
 export class ECIES {
@@ -36,14 +36,7 @@ export class ECIES {
         const key = await hkdf(secret)
         return decrypt(ciphertext.slice(32), key)
     }
-}
-
-export class ECIESEphemeral {
-    private ecdher: ECDHInterface
-    constructor(ecdhProvider: ECDHInterface) {
-        this.ecdher = ecdhProvider
-    }
-    async encrypt(raw: Uint8Array) {
+    async encryptEphemeral(raw: Uint8Array) {
         const ephemeralKeys = generateC25519keys()
         const ephemeralSecret = x25519(ephemeralKeys.secretKey, (await this.ecdher.publicEncryptionKey()).toUint8Array())
         const key = await hkdf(ephemeralSecret)
@@ -53,11 +46,10 @@ export class ECIESEphemeral {
         res.set(ciphertext, 32)
         return res
     }
-    async decrypt(ciphertext: Uint8Array) {
+    async decryptEphemeral(ciphertext: Uint8Array) {
         const ephemeralPublicKey = ciphertext.slice(0, 32)
         const ephemeralSecret = (await this.ecdher.ecdh(new Ed25519PublicKey(ephemeralPublicKey)))
         const key = await hkdf(ephemeralSecret)
         return decrypt(ciphertext.slice(32), key)
     }
-
 }
