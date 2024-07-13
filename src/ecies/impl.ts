@@ -3,8 +3,8 @@ import { ECDHInterface } from "./echd_provider"
 import { Ed25519PublicKey } from "@aptos-labs/ts-sdk"
 
 export interface ECIESLike {
-    encrypt(raw: Uint8Array, to: Ed25519PublicKey): Promise<Uint8Array>
-    decrypt(ciphertext: Uint8Array, from: Ed25519PublicKey): Promise<Uint8Array>
+    encrypt(raw: Uint8Array, to: Uint8Array): Promise<Uint8Array>
+    decrypt(ciphertext: Uint8Array, from: Uint8Array): Promise<Uint8Array>
 }
 export interface ECIESEphemeralLike {
     encryptEphemeral(raw: Uint8Array): Promise<Uint8Array>
