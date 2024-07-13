@@ -1,8 +1,8 @@
-import { x25519, x25519Base } from "../utils/index";
-import { edwardsToMontgomeryPriv } from "@noble/curves/ed25519";
+import { Ed25519PrivateKey } from "@aptos-labs/ts-sdk";
+import { toX25519PrivKey, x25519, x25519Base } from "../utils/index";
 
 export class ECDHWalletExtension {
-    private key: Uint8Array
+    private key: Ed25519PrivateKey
     get features() {
         return {
             'aptos:echd': {
@@ -16,15 +16,15 @@ export class ECDHWalletExtension {
         }
     }
     public async ecdh(theirPublicKey: Uint8Array): Promise<Uint8Array> {
-        const sk = edwardsToMontgomeryPriv(this.key.slice(0, 32))
+        const sk = toX25519PrivKey(this.key)
         return x25519(sk, theirPublicKey)
     }
     public async publicEncryptionKey(): Promise<Uint8Array> {
-        const sk = edwardsToMontgomeryPriv(this.key.slice(0, 32))
+        const sk = toX25519PrivKey(this.key)
         return x25519Base(sk)
     }
     constructor(privateKey: Uint8Array) {
-        this.key = privateKey
+        this.key = new Ed25519PrivateKey(privateKey)
     }
 }
 
