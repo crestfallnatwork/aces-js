@@ -1,6 +1,6 @@
 {
   "name": "acess-js",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Node.JS implementation of aptos chain encryption scheme which is a way to do e2e encrypt messages on aptos and more",
   "scripts": {
     "test": "tsx --test"
@@ -14,6 +14,6 @@
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "^1.22.2",
-    "tweetnacl": "^1.0.3"
+    "@noble/curves": "^1.4.2"
   }
 }

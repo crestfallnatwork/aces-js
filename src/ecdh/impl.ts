@@ -1,5 +1,5 @@
-import { Ed25519PublicKey} from "@aptos-labs/ts-sdk";
 import { x25519, x25519Base } from "../utils/index";
+import { edwardsToMontgomeryPriv } from "@noble/curves/ed25519";
 
 export class ECDHWalletExtension {
     private key: Uint8Array
@@ -15,13 +15,28 @@ export class ECDHWalletExtension {
             }
         }
     }
-    public async ecdh(theirPublicKey: Ed25519PublicKey): Promise<Uint8Array> {
-        return x25519(this.key.slice(0,32), theirPublicKey.toUint8Array())
+    public async ecdh(theirPublicKey: Uint8Array): Promise<Uint8Array> {
+        const sk = edwardsToMontgomeryPriv(this.key.slice(0, 32))
+        return x25519(sk, theirPublicKey)
     }
-    public async publicEncryptionKey(): Promise<Ed25519PublicKey> {
-        return new Ed25519PublicKey(x25519Base(this.key.slice(0, 32)))
+    public async publicEncryptionKey(): Promise<Uint8Array> {
+        const sk = edwardsToMontgomeryPriv(this.key.slice(0, 32))
+        return x25519Base(sk)
     }
     constructor(privateKey: Uint8Array) {
         this.key = privateKey
+    }
+}
+
+export class ECDH {
+    private key: Uint8Array
+    constructor(privateKey: Uint8Array) {
+        this.key = privateKey
+    }
+    public async ecdh(theirPublicKey: Uint8Array): Promise<Uint8Array> {
+        return x25519(this.key, theirPublicKey)
+    }
+    public async publicEncryptionKey(): Promise<Uint8Array> {
+        return x25519Base(this.key)
     }
 }

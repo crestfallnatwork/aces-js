@@ -1,1 +1,1 @@
-export {ECDHWalletExtension} from './impl'
+export * from './impl'
