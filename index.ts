@@ -1,3 +1,3 @@
 export * from './src/ecdh'
-export * from './src/ecies'
+export * from './src/acess'
 export * from './src/utils'

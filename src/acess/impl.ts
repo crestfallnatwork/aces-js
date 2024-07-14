@@ -1,17 +1,16 @@
 import { hkdf, encrypt, decrypt, x25519, generateKeys } from "../utils/index"
 import { ECDHInterface } from "./echd_provider"
-import { Ed25519PublicKey } from "@aptos-labs/ts-sdk"
 
-export interface ECIESLike {
+export interface ACESSLike {
     encrypt(raw: Uint8Array, to: Uint8Array): Promise<Uint8Array>
     decrypt(ciphertext: Uint8Array, from: Uint8Array): Promise<Uint8Array>
 }
-export interface ECIESEphemeralLike {
-    encryptEphemeral(raw: Uint8Array): Promise<Uint8Array>
-    decryptEphemeral(ciphertext: Uint8Array): Promise<Uint8Array>
+export interface ACESSSelfLike {
+    encryptSelf(raw: Uint8Array): Promise<Uint8Array>
+    decryptSelf(ciphertext: Uint8Array): Promise<Uint8Array>
 }
 
-export class ECIES {
+export class ACESS {
     private ecdher: ECDHInterface
     constructor(ecdhProvider: ECDHInterface) {
         this.ecdher = ecdhProvider
@@ -36,7 +35,7 @@ export class ECIES {
         const key = await hkdf(secret)
         return decrypt(ciphertext.slice(32), key)
     }
-    async encryptEphemeral(raw: Uint8Array) {
+    async encryptSelf(raw: Uint8Array) {
         const ephemeralKeys = generateKeys()
         const ephemeralSecret = x25519(ephemeralKeys.sk, (await this.ecdher.publicEncryptionKey()))
         const key = await hkdf(ephemeralSecret)
@@ -46,7 +45,7 @@ export class ECIES {
         res.set(ciphertext, 32)
         return res
     }
-    async decryptEphemeral(ciphertext: Uint8Array) {
+    async decryptSelf(ciphertext: Uint8Array) {
         const ephemeralPublicKey = ciphertext.slice(0, 32)
         const ephemeralSecret = (await this.ecdher.ecdh(ephemeralPublicKey))
         const key = await hkdf(ephemeralSecret)
