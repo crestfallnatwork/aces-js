@@ -1,9 +1,10 @@
+import { Ed25519PublicKey } from "@aptos-labs/ts-sdk"
 import { hkdf, encrypt, decrypt, x25519, generateKeys } from "../utils/index"
 import { ECDHInterface } from "./echd_provider"
 
 export interface ACESSLike {
-    encrypt(raw: Uint8Array, to: Uint8Array): Promise<Uint8Array>
-    decrypt(ciphertext: Uint8Array, from: Uint8Array): Promise<Uint8Array>
+    encrypt(raw: Uint8Array, to: Ed25519PublicKey): Promise<Uint8Array>
+    decrypt(ciphertext: Uint8Array, from: Ed25519PublicKey): Promise<Uint8Array>
 }
 export interface ACESSSelfLike {
     encryptSelf(raw: Uint8Array): Promise<Uint8Array>

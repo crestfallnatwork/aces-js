@@ -1,4 +1,5 @@
-import * as crypto from 'node:crypto'
+import { crypto } from './crypto'
+
 export function randomBytes(n: number): Uint8Array {
     return randomBytesIn(new Uint8Array(n))
 }

@@ -1,5 +1,5 @@
 import { randomBytes } from "./random"
-import * as crypto from 'node:crypto'
+import { crypto } from './crypto'
 
 export async function encrypt(raw: Uint8Array, sharedKey: CryptoKey): Promise<Uint8Array> {
     const res = new Uint8Array(12 + raw.length + 16)

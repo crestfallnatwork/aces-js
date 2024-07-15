@@ -1,4 +1,4 @@
-import * as crypto from 'node:crypto'
+import { crypto } from './crypto'
 export async function hkdf(secret: Uint8Array) {
     return crypto.subtle.deriveKey(
         {
