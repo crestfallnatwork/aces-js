@@ -1,16 +1,23 @@
 {
   "name": "acess-js",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Node.JS implementation of aptos chain encryption scheme which is a way to do e2e encrypt messages on aptos and more",
   "scripts": {
     "test": "tsx --test",
-    "build": "esbuild index.ts --bundle --outfile=dist/out.js --platform=browser --external:node:crypto"
+    "build": "tsup"
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+      "dist"
+  ],
   "author": "crestfalln",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.14.10",
     "esbuild": "0.23.0",
+    "tsup": "^8.1.0",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   },

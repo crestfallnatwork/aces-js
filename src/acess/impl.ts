@@ -1,4 +1,3 @@
-import { Ed25519PublicKey } from "@aptos-labs/ts-sdk"
 import { hkdf, encrypt, decrypt, x25519, generateKeys } from "../utils/index"
 import { ECDHInterface } from "./echd_provider"
 
